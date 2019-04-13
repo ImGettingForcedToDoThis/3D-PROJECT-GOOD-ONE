@@ -8,27 +8,29 @@ public class Player : MonoBehaviour
     public float Speed;
     public float JumpStrength;
     public float Sensitivity;
-
+    public GameObject blueportal;
+    public GameObject orangeportal;
     private Vector2 myMouse;
     private Rigidbody myRigidbody;
     private bool isGrounded;
-
-	// Use this for initialization
-	void Start ()
+    private GameObject Activeblueportal;
+    private GameObject Activeorangeportal;
+    // Use this for initialization
+    void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         myRigidbody = gameObject.GetComponent<Rigidbody>();
-	}
-	
-	// Update is called once per frame
-	void Update ()
+    }
+
+    // Update is called once per frame
+    void Update()
     {
         myMouse.x = Input.GetAxis("Mouse X");
         myMouse.y = Input.GetAxis("Mouse Y");
 
         transform.eulerAngles += new Vector3(0.0f, myMouse.x * Sensitivity * Time.deltaTime, 0.0f);
         Vector3 targetRotation = new Vector3(-myMouse.y * Sensitivity * Time.deltaTime, 0.0f, 0.0f);
-        if(targetRotation.x + myCamera.transform.eulerAngles.x < 90 || targetRotation.x + myCamera.transform.eulerAngles.x > 270)
+        if (targetRotation.x + myCamera.transform.eulerAngles.x < 90 || targetRotation.x + myCamera.transform.eulerAngles.x > 270)
         {
             myCamera.transform.eulerAngles += targetRotation;
         }
@@ -55,6 +57,35 @@ public class Player : MonoBehaviour
             isGrounded = false;
         }
     }
+    void Shootblueportal
+        ()
+    {
+        Ray ray = myCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.0f));
+
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit))
+        {
+        }
+        
+        if (ActiveBluePortal)
+        {
+
+        }
+        Activeblueportal = instantiate(Blue);
+
+    }
+
+    Destroy(oldBlueportal); 
+    {
+        
+    }
+
+
+    void Shootorangeportal()
+    {
+
+    }
+
 
     void OnCollisionEnter(Collision collision)
     {
@@ -62,5 +93,6 @@ public class Player : MonoBehaviour
         {
             isGrounded = true;
         }
+    
     }
 }
