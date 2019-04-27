@@ -8,13 +8,14 @@ public class Player : MonoBehaviour
     public float Speed;
     public float JumpStrength;
     public float Sensitivity;
-    public GameObject blueportal;
-    public GameObject orangeportal;
+    public GameObject Blueportal;
+    public GameObject Orangeportal;
     private Vector2 myMouse;
     private Rigidbody myRigidbody;
     private bool isGrounded;
-    private GameObject Activeblueportal;
-    private GameObject Activeorangeportal;
+    private GameObject ActiveBluePortal;
+    private GameObject ActiveOrangePortal;
+  
     // Use this for initialization
     void Start()
     {
@@ -56,8 +57,19 @@ public class Player : MonoBehaviour
             myRigidbody.AddForce(0.0f, JumpStrength, 0.0f, ForceMode.Impulse);
             isGrounded = false;
         }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            ShootBluePortal();
+        }
+        if (Input.GetMouseButtonDown(1))
+        {
+            ShootOrangePortal();
+        }
     }
-    void Shootblueportal
+   
+
+    void ShootBluePortal
         ()
     {
         Ray ray = myCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.0f));
@@ -71,7 +83,7 @@ public class Player : MonoBehaviour
         {
 
         }
-        Activeblueportal = instantiate(Blue);
+        ActiveBluePortal = instantiate(Blue) Blueportal; Quaternion.LookRotation(hit.normal, Vector3.up);
 
     }
 
@@ -82,9 +94,24 @@ public class Player : MonoBehaviour
 
 
     void Shootorangeportal()
+  
     {
+        Ray ray = myCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.0f));
+
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit))
+        {
+        }
+
+        if (ActiveOrangePortal)
+        {
+
+        }
+        Activeorangeportal = instantiate(orange) orangeportal; Quaternion.LookRotation(hit.normal, Vector3.up);
 
     }
+}
+
 
 
     void OnCollisionEnter(Collision collision)
