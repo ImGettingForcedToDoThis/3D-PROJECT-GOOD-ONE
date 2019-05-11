@@ -87,10 +87,9 @@ public class Player : MonoBehaviour
 
     }
 
+
+
     Destroy(oldBlueportal); 
-    {
-        
-    }
 
 
     void Shootorangeportal()
@@ -107,19 +106,39 @@ public class Player : MonoBehaviour
         {
 
         }
-        Activeorangeportal = instantiate(orange) orangeportal; Quaternion.LookRotation(hit.normal, Vector3.up);
+        Activeorangeportal = instantiate(orange) orangePortal Quaternion.LookRotation(hit.normal, Vector3.up);
 
     }
 }
 
 
+void teleport(Gameobject portal)
 
+{
+	GameObject otherportal;
+
+	if (portal.name == "BluePortal")
+	{
+		otherPortal = gameObject.Find("OrangePortal")
+	}
+	else
+	{
+		otherportal = gameObject.Find("BluePortal")
+	}
+	transform.Position = Portal.transform.position
+}
+float magnitude = myRigidbody.Velocity.magnitude;
+myRigidbody.Velocity = otherportal.transform.teleport*magnitude;
+transform.position = potal transform.position
     void OnCollisionEnter(Collision collision)
     {
+	
         if(collision.gameObject.tag == "Ground")
         {
             isGrounded = true;
         }
-    
+	else if(Collision.gameObject.tag == "portal"){
+		teleport Collision.gamemode;
+	}
     }
 }
