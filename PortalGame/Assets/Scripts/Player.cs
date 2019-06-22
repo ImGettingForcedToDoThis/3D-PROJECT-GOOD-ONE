@@ -8,6 +8,8 @@ public class Player : MonoBehaviour
     public float Speed;
     public float JumpStrength;
     public float Sensitivity;
+    public float Teleportexitdisc;
+    public float waitTime;
 
     public GameObject BluePortal;
     public GameObject OrangePortal;
@@ -15,6 +17,7 @@ public class Player : MonoBehaviour
     private Vector2 myMouse;
     private Rigidbody myRigidbody;
     private bool isGrounded;
+    private bool canteleport = true;
 
     private GameObject ActiveBluePortal;
     private GameObject ActiveOrangePortal;
@@ -102,35 +105,46 @@ public class Player : MonoBehaviour
 
     void Teleport(GameObject portal)
     {
-        GameObject otherPortal;
-        if (portal.name == "BluePortal(Clone)")
+        if (canteleport)
         {
-            otherPortal = GameObject.Find("OrangePortal(Clone)");
-        }
-        else
-        {
-            otherPortal = GameObject.Find("BluePortal(Clone)");
-        }
-        if (otherPortal)
-        {
-            transform.position = otherPortal.transform.position;
+            GameObject otherPortal;
+            if (portal.name == "Blue Portal(Clone)")
+            {
+                otherPortal = GameObject.Find("Orange Portal(Clone)");
+            }
+            else
+            {
+                otherPortal = GameObject.Find("Blue Portal(Clone)");
+            }
+            if (otherPortal)
+            {
+                transform.position = otherPortal.transform.position + otherPortal.transform.forward * Teleportexitdisc;
 
 
 
-            float magnitude = myRigidbody.velocity.magnitude;
-            myRigidbody.velocity = otherPortal.transform.forward * magnitude;
+                float magnitude = myRigidbody.velocity.magnitude;
+                myRigidbody.velocity = otherPortal.transform.forward * magnitude;
+                canteleport = false;
+                StartCoroutine(Teleportcooldown());
+            }
         }
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Ground")
+        if (collision.gameObject.tag == "Ground")
         {
             isGrounded = true;
         }
-        else if(collision.gameObject.tag == "Portal")
+        else if (collision.gameObject.tag == "Portal")
         {
             Teleport(collision.gameObject);
         }
+        
     }
+        IEnumerator Teleportcooldown()
+        {
+            yield return new WaitForSeconds(waitTime);
+            canteleport = true;
+        }
 }
